@@ -8,7 +8,7 @@ logging.basicConfig(format='%(levelname)s:%(message)s',
 log = logging.getLogger(__name__)
 
 
-base = arrow.now()
+today = arrow.now()
 
 def process(raw):
     """
@@ -40,6 +40,9 @@ def process(raw):
         if field == "begin":
             try:
                 base = arrow.get(content, "MM/DD/YYYY")
+                diff_days= (today - base).days
+                curr_week = diff_days // 7 + 1
+                cooked.append(curr_week)
                 # print("Base date {}".format(base.isoformat()))
             except:
                 raise ValueError("Unable to parse date {}".format(content))

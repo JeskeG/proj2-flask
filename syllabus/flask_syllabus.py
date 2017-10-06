@@ -42,7 +42,8 @@ schedule = pre.process(open(configuration.SYLLABUS))
 def index():
   """Main application page; most users see only this"""
   app.logger.debug("Main page entry")
-  flask.g.schedule = schedule  # To be accessible in Jinja2 on page
+  flask.g.schedule = schedule[1:] # To be accessible in Jinja2 on page
+  flask.g.curr_week = schedule[0]
   return flask.render_template('syllabus.html')
 
 @app.route("/refresh")
@@ -72,6 +73,7 @@ def format_arrow_date( date ):
         return normal.format("ddd MM/DD/YYYY")
     except:
         return "(bad date)"
+
 
 
 #############
